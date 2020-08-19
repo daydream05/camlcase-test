@@ -1,3 +1,26 @@
+const activeEnv =
+  process.env.GATSBY_ACTIVE_ENV || process.env.NODE_ENV || "development"
+
+require("dotenv").config({
+  path: `.env.${activeEnv}`,
+})
+
+let contentfulConfig
+
+contentfulConfig =
+  activeEnv === `development`
+    ? {
+        spaceId: process.env.CONTENTFUL_SPACE_ID,
+        // Learn about environment variables: https://gatsby.dev/env-vars
+        accessToken: process.env.CONTENTFUL_PREVIEW_API_ACCESS_TOKEN,
+        host: `preview.contentful.com`,
+      }
+    : {
+        spaceId: process.env.CONTENTFUL_SPACE_ID,
+        // Learn about environment variables: https://gatsby.dev/env-vars
+        accessToken: process.env.CONTENTFUL_DELIVERY_API_ACCESS_TOKEN,
+      }
+
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
@@ -35,6 +58,10 @@ module.exports = {
           families: ["Poppins:400,500,700"],
         },
       },
+    },
+    {
+      resolve: `gatsby-source-contentful`,
+      options: contentfulConfig,
     },
 
     // this (optional) plugin enables Progressive Web App + Offline functionality
