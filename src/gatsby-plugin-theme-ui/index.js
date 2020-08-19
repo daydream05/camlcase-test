@@ -12,6 +12,19 @@ const theme = merge(base, {
     heading:
       'Poppins, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
   },
+  styles: {
+    root: {
+      fontFamily: `heading`,
+      lineHeight: `body`,
+      fontWeight: `body`,
+      h1: {
+        lineHeight: `heading`,
+      }
+    },
+    h1: {
+      lineHeight: `heading`,
+    }
+  }
 })
 
 export default theme

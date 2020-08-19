@@ -1,35 +1,49 @@
-import { Link } from "gatsby"
-import PropTypes from "prop-types"
 import React from "react"
+import PropTypes from "prop-types"
+import { useStaticQuery, Link } from "gatsby"
+import Img from 'gatsby-image'
 
-const Header = ({ siteTitle }) => (
-  <header
-    style={{
-      background: `rebeccapurple`,
-      marginBottom: `1.45rem`,
-    }}
-  >
-    <div
-      style={{
-        margin: `0 auto`,
-        maxWidth: 960,
-        padding: `1.45rem 1.0875rem`,
+/** @jsx jsx */
+import { jsx } from 'theme-ui'
+import { mediaQueries } from "../gatsby-plugin-theme-ui/media-queries"
+
+const Header = ({ siteTitle }) => {
+   const data = useStaticQuery(graphql`
+     query {
+       logo: file(relativePath: { eq: "logo.png" }) {
+         childImageSharp {
+           fluid(maxWidth: 186) {
+             ...GatsbyImageSharpFluid
+           }
+         }
+       }
+     }
+   `)
+
+  return (
+    <header
+      sx={{
+        background: `none`,
+        position: `fixed`,
+        px: 4,
+        py: 4,
+        width: `100%`,
       }}
     >
-      <h1 style={{ margin: 0 }}>
-        <Link
-          to="/"
-          style={{
-            color: `white`,
-            textDecoration: `none`,
-          }}
-        >
-          {siteTitle}
-        </Link>
-      </h1>
-    </div>
-  </header>
-)
+      <Link to="/"
+        sx={{
+          width: `93px`,
+          display: `block`,
+          [mediaQueries.xl]: {
+            width: `183px`,
+          }
+        }}
+      >
+        <Img fluid={data.logo.childImageSharp.fluid} alt="camlcase logo" />
+      </Link>
+    </header>
+  )
+}
 
 Header.propTypes = {
   siteTitle: PropTypes.string,
