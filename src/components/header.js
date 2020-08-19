@@ -24,7 +24,7 @@ const Header = ({ siteTitle }) => {
     <header
       sx={{
         background: `none`,
-        position: `fixed`,
+        position: `absolute`,
         px: 4,
         py: 4,
         width: `100%`,

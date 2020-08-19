@@ -20,10 +20,16 @@ const theme = merge(base, {
       h1: {
         lineHeight: `heading`,
       },
+      h2: {
+        m: 0,
+      }
     },
     h1: {
       lineHeight: `heading`,
     },
+    h2: {
+      fontSize: 4,
+    }
   },
   sizes: {
     container: breakpoints.xl,
