@@ -4,7 +4,7 @@ import { useStaticQuery, Link } from "gatsby"
 import Img from 'gatsby-image'
 
 /** @jsx jsx */
-import { jsx } from 'theme-ui'
+import { jsx, Container } from 'theme-ui'
 import { mediaQueries } from "../gatsby-plugin-theme-ui/media-queries"
 
 const Header = ({ siteTitle }) => {
@@ -28,19 +28,25 @@ const Header = ({ siteTitle }) => {
         px: 4,
         py: 4,
         width: `100%`,
+        [mediaQueries.xl]: {
+          px: 5,
+        }
       }}
     >
-      <Link to="/"
-        sx={{
-          width: `93px`,
-          display: `block`,
-          [mediaQueries.xl]: {
-            width: `183px`,
-          }
-        }}
-      >
-        <Img fluid={data.logo.childImageSharp.fluid} alt="camlcase logo" />
-      </Link>
+      <Container>
+        <Link
+          to="/"
+          sx={{
+            width: `93px`,
+            display: `block`,
+            [mediaQueries.xl]: {
+              width: `183px`,
+            },
+          }}
+        >
+          <Img fluid={data.logo.childImageSharp.fluid} alt="camlcase logo" />
+        </Link>
+      </Container>
     </header>
   )
 }

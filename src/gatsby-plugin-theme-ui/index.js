@@ -19,12 +19,15 @@ const theme = merge(base, {
       fontWeight: `body`,
       h1: {
         lineHeight: `heading`,
-      }
+      },
     },
     h1: {
       lineHeight: `heading`,
-    }
-  }
+    },
+  },
+  sizes: {
+    container: breakpoints.xl,
+  },
 })
 
 export default theme
