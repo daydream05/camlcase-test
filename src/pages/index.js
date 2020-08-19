@@ -13,7 +13,9 @@ import { HeroWithText } from "../components/hero-with-text"
 import googleStore from '../images/google-store.png'
 import appleIcon from '../images/apple-icon.png'
 import bgMob from '../images/bg-mob-1.png'
+import desktopBgVision from '../images/download-block-desktop.png'
 import { mediaQueries } from "../gatsby-plugin-theme-ui/media-queries"
+import { breakpoints } from "../gatsby-plugin-theme-ui/breakpoints"
 
 
 const IndexPage = ({ data }) => {
@@ -25,8 +27,9 @@ const IndexPage = ({ data }) => {
       <SEO title="Home" />
       <HeroWithText />
       {products.length > 0 &&
-        products.map(({ node }) => {
-          return <ProductSection product={node} key={node.id} />
+        products.map(({ node }, id) => {
+          const isEven = id % 2 === 0 
+          return <ProductSection product={node} key={node.id} reversed={isEven} />
         })}
       <VisionSection />
       {contentfulTeamSection && (
@@ -40,7 +43,7 @@ const IndexPage = ({ data }) => {
   )
 }
 
-const ProductSection = ({ product }) => {
+const ProductSection = ({ product, reversed }) => {
   return (
     <section
       sx={{
@@ -48,25 +51,85 @@ const ProductSection = ({ product }) => {
         py: 5,
       }}
     >
-      <Container>
+      <Container
+        sx={{
+          maxWidth: breakpoints.lg,
+        }}
+      >
         <Styled.h2
           sx={{
             mb: 3,
+            [mediaQueries.lg]: {
+              ml: reversed ? 0 : `50%`,
+              mb: 0,
+            },
           }}
         >
           {product?.name}
         </Styled.h2>
-        {product?.image?.fluid && (
-          <GatsbyImage fluid={product.image.fluid} alt={product.image.title} />
-        )}
-        {product?.shortDescription?.internal?.content && (
-          <Styled.p sx={{ fontSize: 1, lineHeight: 2 }}>
-            {product?.shortDescription?.internal?.content}
-          </Styled.p>
-        )}
-        {product?.url && (
-          <ProductButton name={product?.name} url={product?.url} />
-        )}
+        <div
+          sx={{
+            [mediaQueries.lg]: {
+              display: `flex`,
+              flexDirection: reversed ? "row-reverse" : `row`,
+            },
+          }}
+        >
+          <div
+            sx={{
+              [mediaQueries.lg]: {
+                flex: `0 0 50%`,
+                maxWidth: `50%`,
+                display: `flex`,
+                justifyContent: `center`,
+              },
+            }}
+          >
+            {product?.image?.fluid && (
+              <div
+                sx={{
+                  [mediaQueries.lg]: {
+                    height: `${product.image.resize.height / 1.175}px`,
+                    width: `${product.image.resize.width / 1.175}px`,
+                    position: `relative`,
+                  },
+                }}
+              >
+                <GatsbyImage
+                  fluid={product.image.fluid}
+                  alt={product.image.title}
+                  sx={{
+                    [mediaQueries.lg]: {
+                      position: `absolute !important`,
+                      top: 0,
+                      left: 0,
+                      width: `100%`,
+                      height: `100%`,
+                      mt: -4,
+                    },
+                  }}
+                />
+              </div>
+            )}
+          </div>
+          <div
+            sx={{
+              [mediaQueries.lg]: {
+                flex: `0 0 50%`,
+                maxWidth: `50%`,
+              },
+            }}
+          >
+            {product?.shortDescription?.internal?.content && (
+              <Styled.p sx={{ fontSize: 1, lineHeight: 2 }}>
+                {product?.shortDescription?.internal?.content}
+              </Styled.p>
+            )}
+            {product?.url && (
+              <ProductButton name={product?.name} url={product?.url} />
+            )}
+          </div>
+        </div>
       </Container>
     </section>
   )
@@ -133,14 +196,23 @@ const VisionSection = () => {
   return (
     <section
       sx={{
+        my: 4,
         py: 5,
         px: 4,
-        bg: `#167ba2`,
         height: `auto`,
         width: `100%`,
+        backgroundImage: `url(${bgMob})`,
+        backgroundSize: `100% 100%`,
+        [mediaQueries.lg]: {
+          backgroundImage: `url(${desktopBgVision})`,
+        },
       }}
     >
-      <Container>
+      <Container
+        sx={{
+          maxWidth: breakpoints.sm,
+        }}
+      >
         <div
           sx={{
             display: `flex`,
@@ -180,8 +252,14 @@ const TeamSection = ({ title, members }) => {
         py: 5,
       }}
     >
-      <Container>
-        <Styled.h2 sx={{ fontSize: 5, textAlign: `center`, mb: 4 }}>
+      <Container
+        sx={{
+          maxWidth: breakpoints.lg,
+        }}
+      >
+        <Styled.h2 sx={{ fontSize: 5, textAlign: `center`, mb: 4, [mediaQueries.lg]: {
+          textAlign: `left`,
+        } }}>
           {title}
         </Styled.h2>
         <ul
@@ -192,6 +270,9 @@ const TeamSection = ({ title, members }) => {
             display: `grid`,
             gridTemplateColumns: `1fr 1fr`,
             gridGap: 3,
+            [mediaQueries.lg]: {
+              gridTemplateColumns: `repeat(4, 1fr)`,
+            }
           }}
         >
           {members.map(member => {
@@ -267,57 +348,79 @@ const ContactSection = () => {
         py: 5,
       }}
     >
-      <Container>
+      <Container
+        sx={{
+          maxWidth: breakpoints.sm,
+        }}
+      >
         <Styled.h2 sx={{ fontSize: 5, textAlign: `center`, mb: 4 }}>
           Contact us
         </Styled.h2>
+        <form>
+          <div sx={inputGroupStyle}>
+            <label
+              sx={{
+                mb: 2,
+                fontWeight: `500`,
+              }}
+            >
+              Name
+            </label>
+            <input sx={inputStyle} type="text" />
+          </div>
+          <div sx={inputGroupStyle}>
+            <label
+              sx={{
+                mb: 2,
+                fontWeight: `500`,
+              }}
+            >
+              Email Address
+            </label>
+            <input sx={inputStyle} type="text" />
+          </div>
+          <div sx={inputGroupStyle}>
+            <label
+              sx={{
+                mb: 2,
+                fontWeight: `500`,
+              }}
+            >
+              Message
+            </label>
+            <textarea
+              sx={{ ...inputStyle, height: `160px`, p: 3 }}
+              type="text"
+            />
+          </div>
+          <div
+            sx={{
+              [mediaQueries.lg]: {
+                display: `flex`,
+                justifyContent: `space-between`,
+                alignItems: `center`
+              }
+            }}
+          >
+            <input
+              value="Send message"
+              sx={{
+                ...buttonStyle,
+                bg: `#0073D0`,
+                width: `142px`,
+                border: `none`,
+                textAlign: `center`,
+              }}
+            />
+            <p>
+              Or email us at{" "}
+              <a href="mailto:support@camelcase.io" sx={{ color: `inherit` }}>
+                support@camelcase.io
+              </a>
+            </p>
+          </div>
+        </form>
       </Container>
-      <form>
-        <div sx={inputGroupStyle}>
-          <label
-            sx={{
-              mb: 2,
-              fontWeight: `500`,
-            }}
-          >
-            Name
-          </label>
-          <input sx={inputStyle} type="text" />
-        </div>
-        <div sx={inputGroupStyle}>
-          <label
-            sx={{
-              mb: 2,
-              fontWeight: `500`,
-            }}
-          >
-            Email Address
-          </label>
-          <input sx={inputStyle} type="text" />
-        </div>
-        <div sx={inputGroupStyle}>
-          <label
-            sx={{
-              mb: 2,
-              fontWeight: `500`,
-            }}
-          >
-            Message
-          </label>
-          <textarea sx={{ ...inputStyle, height: `160px`, p: 3 }} type="text" />
-        </div>
-        <input
-          value="Send message"
-          sx={{
-            ...buttonStyle,
-            bg: `#0073D0`,
-            width: `142px`,
-            border: `none`,
-            textAlign: `center`
-          }}
-        />
-      </form>
-      <p>Or email us at <a href="mailto:support@camelcase.io" sx={{ color: `inherit`}}>support@camelcase.io</a></p>
     </section>
   )
 }
@@ -331,8 +434,15 @@ export const indexQuery = graphql`
           name
           image {
             title
+            resize {
+              width
+              height
+            }
             fluid {
               ...GatsbyContentfulFluid_withWebp_noBase64
+            }
+            fixed {
+              ...GatsbyContentfulFixed_withWebp_noBase64
             }
           }
           url

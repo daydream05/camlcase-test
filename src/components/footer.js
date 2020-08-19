@@ -5,6 +5,7 @@ import { jsx, Container, Styled } from 'theme-ui'
 
 import logo from '../images/logo.png'
 import twitterLogo from "../images/twitter-icon.png"
+import { mediaQueries } from '../gatsby-plugin-theme-ui/media-queries'
 
 export const Footer = () => {
   return (
@@ -24,31 +25,58 @@ export const Footer = () => {
             alignItems: `center`,
           }}
         >
-          <img
-            src={logo}
-            alt="camlCase logo"
+          <div
             sx={{
-              maxWidth: `92px`,
-              mb: `55px`,
-            }}
-          />
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://twitter.com/camlcasetech"
-            sx={{
-              textDecoration: `none`,
-              color: `white`,
-              fontSize: 1,
-              mb: `85px`,
+              display: `flex`,
+              flexDirection: `column`,
+              justifyContent: `center`,
+              alignItems: `center`,
+              width: `100%`,
+              [mediaQueries.lg]: {
+                flexDirection: `row`,
+                justifyContent: `space-between`,
+              },
             }}
           >
-            <img src={twitterLogo} alt="twitter" sx={{
-              width: `16px`,
-              height: `16px`,
-            }} /> camlCaseTech
-          </a>
-          <div>
+            <div>
+              <img
+                src={logo}
+                alt="camlCase logo"
+                sx={{
+                  maxWidth: `92px`,
+                  mb: `55px`,
+                }}
+              />
+            </div>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://twitter.com/camlcasetech"
+              sx={{
+                textDecoration: `none`,
+                color: `white`,
+                fontSize: 1,
+                mb: `85px`,
+              }}
+            >
+              <img
+                src={twitterLogo}
+                alt="twitter"
+                sx={{
+                  width: `16px`,
+                  height: `16px`,
+                }}
+              />{" "}
+              camlCaseTech
+            </a>
+          </div>
+          <div
+            sx={{
+              [mediaQueries.lg]: {
+                alignSelf: `flex-end`,
+              },
+            }}
+          >
             <p
               sx={{
                 color: `white`,

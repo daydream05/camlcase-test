@@ -28,6 +28,7 @@ const Header = ({ siteTitle }) => {
         px: 4,
         py: 4,
         width: `100%`,
+        zIndex: 2,
         [mediaQueries.xl]: {
           px: 5,
         }
