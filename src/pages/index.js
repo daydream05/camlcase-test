@@ -317,6 +317,7 @@ const ContactSection = () => {
           }}
         />
       </form>
+      <p>Or email us at <a href="mailto:support@camelcase.io" sx={{ color: `inherit`}}>support@camelcase.io</a></p>
     </section>
   )
 }
