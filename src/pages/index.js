@@ -427,7 +427,7 @@ const ContactSection = () => {
 
 export const indexQuery = graphql`
   query {
-    allContentfulProduct {
+    allContentfulProduct(sort: {fields: name, order: ASC}) {
       edges {
         node {
           id
