@@ -312,6 +312,7 @@ const TeamSection = ({ title, members }) => {
                   sx={{
                     fontSize: 0,
                     textAlign: `center`,
+                    mt: 0,
                   }}
                 >
                   {member.role}
