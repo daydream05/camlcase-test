@@ -17,6 +17,8 @@ import desktopBgVision from '../images/download-block-desktop.png'
 import { mediaQueries } from "../gatsby-plugin-theme-ui/media-queries"
 import { breakpoints } from "../gatsby-plugin-theme-ui/breakpoints"
 
+import '../components/index.css'
+
 
 const IndexPage = ({ data }) => {
 
@@ -207,6 +209,7 @@ const VisionSection = () => {
           backgroundImage: `url(${desktopBgVision})`,
         },
       }}
+      id="vision"
     >
       <Container
         sx={{
@@ -251,6 +254,7 @@ const TeamSection = ({ title, members }) => {
         px: 4,
         py: 5,
       }}
+      id="team"
     >
       <Container
         sx={{
@@ -348,6 +352,7 @@ const ContactSection = () => {
         px: 4,
         py: 5,
       }}
+      id="contact"
     >
       <Container
         sx={{

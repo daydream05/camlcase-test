@@ -20,6 +20,28 @@ const Header = ({ siteTitle }) => {
      }
    `)
 
+  const linkStyle = {
+    color: `white`,
+    textDecoration: `none`,
+    fontSize: 1,
+    position: `relative`,
+    "&:hover": {
+      "::after": {
+        width: `100%`,
+      },
+    },
+    "::after": {
+      content: '""',
+      position: `absolute`,
+      height: `1px`,
+      bg: `white`,
+      bottom: `-1px`,
+      left: 0,
+      transition: `0.2s`,
+      width: `0%`,
+    },
+  }
+
   return (
     <header
       sx={{
@@ -31,22 +53,70 @@ const Header = ({ siteTitle }) => {
         zIndex: 2,
         [mediaQueries.xl]: {
           px: 5,
-        }
+        },
       }}
     >
       <Container>
-        <Link
-          to="/"
+        <nav
           sx={{
-            width: `93px`,
-            display: `block`,
-            [mediaQueries.xl]: {
-              width: `183px`,
-            },
+            display: `flex`,
+            justifyContent: `space-between`,
+            width: `100%`,
           }}
         >
-          <Img fluid={data.logo.childImageSharp.fluid} alt="camlcase logo" />
-        </Link>
+          <Link
+            to="/"
+            sx={{
+              width: `93px`,
+              display: `block`,
+              [mediaQueries.xl]: {
+                width: `183px`,
+              },
+            }}
+          >
+            <Img fluid={data.logo.childImageSharp.fluid} alt="camlcase logo" />
+          </Link>
+          <ul
+            sx={{
+              listStyle: `none`,
+              display: `none`,
+              p: 0,
+              m: 0,
+              [mediaQueries.lg]: {
+                display: `flex`,
+                alignItems: `center`,
+              },
+            }}
+          >
+            <li
+              sx={{
+                ml: 3,
+              }}
+            >
+              <a href="#vision" sx={linkStyle}>
+                Vision
+              </a>
+            </li>
+            <li
+              sx={{
+                ml: 3,
+              }}
+            >
+              <a href="#team" sx={linkStyle}>
+                Team
+              </a>
+            </li>
+            <li
+              sx={{
+                ml: 3,
+              }}
+            >
+              <a href="#contact" sx={linkStyle}>
+                Contact
+              </a>
+            </li>
+          </ul>
+        </nav>
       </Container>
     </header>
   )
