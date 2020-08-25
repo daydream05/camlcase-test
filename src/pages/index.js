@@ -38,6 +38,7 @@ const IndexPage = ({ data }) => {
         <TeamSection
           title={contentfulTeamSection.title}
           members={contentfulTeamSection.featuredMembers}
+          text={contentfulTeamSection.text}
         />
       )}
       <ContactSection />
@@ -243,7 +244,7 @@ const VisionSection = () => {
   )
 }
 
-const TeamSection = ({ title, members }) => {
+const TeamSection = ({ title, members, text }) => {
   if(!members || members.length < 0) {
     return null
   }
@@ -261,9 +262,16 @@ const TeamSection = ({ title, members }) => {
           maxWidth: breakpoints.lg,
         }}
       >
-        <Styled.h2 sx={{ fontSize: 5, textAlign: `center`, mb: 4, [mediaQueries.lg]: {
-          textAlign: `left`,
-        } }}>
+        <Styled.h2
+          sx={{
+            fontSize: 5,
+            textAlign: `center`,
+            mb: 4,
+            [mediaQueries.lg]: {
+              textAlign: `left`,
+            },
+          }}
+        >
           {title}
         </Styled.h2>
         <ul
@@ -276,7 +284,7 @@ const TeamSection = ({ title, members }) => {
             gridGap: 3,
             [mediaQueries.lg]: {
               gridTemplateColumns: `repeat(4, 1fr)`,
-            }
+            },
           }}
         >
           {members.map(member => {
@@ -325,6 +333,11 @@ const TeamSection = ({ title, members }) => {
             )
           })}
         </ul>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: text.childMarkdownRemark.html,
+          }}
+        />
       </Container>
     </section>
   )
@@ -473,6 +486,11 @@ export const indexQuery = graphql`
               ...GatsbyContentfulFluid_withWebp_noBase64
             }
           } 
+        }
+      }
+      text {
+        childMarkdownRemark {
+          html
         }
       }
     }

@@ -1,3 +1,8 @@
+---
+name: Getting Started 2
+route: /docs/v1/getting-started-2/
+menu: Components
+---
 <p align="center">
   <a href="https://www.gatsbyjs.org">
     <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
